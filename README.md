@@ -51,7 +51,7 @@ Good , so i send "%p" to the first input and the program leaked to me an address
 
 ## step 3 - debugging the binary 
 I wil use gdb -q main (-q for less input in the intro) to debug the binary and type info func to list all the functions in our program 
-```bash
+```gdb
 ┌──(kali㉿kali)-[~/Desktop/ramadhan-ctf/5-piecanary/order_handout]
 └─$ gdb -q  main
 GEF for linux ready, type `gef' to start, `gef config' to configure
@@ -83,7 +83,7 @@ Non-debugging symbols:
 gef➤  
 ```
 As you can see we are interested in main,vuln and win function, let's disassemble main using disass main 
-```bash
+```gdb
 gef➤  disass main
 Dump of assembler code for function main:
    0x000000000000126c <+0>:     push   rbp
@@ -122,7 +122,7 @@ End of assembler dump.
 gef➤  
 ```
 It's calling vuln let's disassemble it too 
-```bsah
+```gdb
 gef➤  disass vuln
 Dump of assembler code for function vuln:
    0x00000000000012fd <+0>:     push   rbp
@@ -172,7 +172,7 @@ And in the second read as we can see this read function start reading 0x50 bytes
 But beware ! We can't just pass 88 random bytes because in rbp-8 we have the stack canary , and it we modify it the program will crash . So we need to leak it and pass it with owr payload .
 
 Now let's disassemble the win function 
-```bash
+```gdb
 gef➤  disass win
 Dump of assembler code for function win:
    0x0000000000001211 <+0>:     push   rbp
@@ -237,7 +237,7 @@ pie_base = leaked_main_addr - main_offset
 win_addr = pie_base + win_offset
 ```
 We are also gonna need the ret gadget for the stack alignement after overwriting the rbp , i am gonna use ropper --f main to list the gadgets of this binary
-```bash
+```gdb
 ┌──(kali㉿kali)-[~/Desktop/ramadhan-ctf/5-piecanary/order_handout]
 └─$ ropper --f main
 
