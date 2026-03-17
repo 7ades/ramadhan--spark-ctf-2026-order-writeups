@@ -169,7 +169,7 @@ gef➤
 ```
 As we can see this function is reading the first input and printing it with printf without using a format specifier (that what made the address leak possible) . 
 And in the second read as we can see this read function start reading 0x50 bytes (80) away from the rbp so we have to overwrite it with 0x50 bytes and 8 bytes to overwrite the rbp .
-But beware ! We can't just pass 88 random bytes because in rbp-8 we have the stack canary , and if we modify it the program will crash . So we need to leak it and pass it with owr payload .
+But beware ! We can't just pass 88 random bytes because in rbp-8 we have the stack canary , and if we modify it the program will crash . So we need to leak it and pass it with our payload .
 
 Now let's disassemble the win function 
 ```gdb
