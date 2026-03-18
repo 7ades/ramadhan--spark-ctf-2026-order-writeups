@@ -1,4 +1,4 @@
-# ramadhan--spark-ctf-2026-order-writeups
+# ramadhan--spark-ctf-2026-order-writeup
 
 ## step 1 - Identifying the binary
 ```bash
